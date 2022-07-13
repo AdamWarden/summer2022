@@ -14,6 +14,15 @@ int main(int argc, char* argv[])
         printf("Failed to allocate space for vector object.\n");
         exit(1);
     }
+
+    for(int i=0; ;i++)
+    {
+        if(vector_push_back(hVector, 42) == FAILURE)
+        {
+            printf("Failed to allocate memory\n");
+            exit(1);
+        }
+    }
     
     //destruction of object
     vector_destroy(hVector);

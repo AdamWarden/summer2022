@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 
 void set_flag(unsigned int flag_holder[], int flag_position)
 {
-    int index = flag_position/32; //index variable to reference elements of array
+    int index = flag_position/32; //index variable to reference flag_position in array out of 32 bits
     flag_holder[index] = flag_holder[index] | (1 << flag_position); //changed to reference array
 }
 
@@ -39,16 +39,13 @@ int check_flag(unsigned int flag_holder[], int flag_position)
 
 void unset_flag(unsigned int flag_holder[], int flag_position)
 {
-    int index = flag_position/32;
-    if((flag_holder[index] | (1<<flag_position)) == (1 << flag_position)) //check if 
-    {
-        flag_holder[index] -= (1 << flag_position);
-    }
+   int index = flag_position/32;
+   flag_holder[index] ^= (1 << flag_position);
 }
 
 void display_flags_as_array(unsigned int flag_holder)
 {
-    for(int i=0; i<=32; i++) //32 bits per line
+    for(int i=1; i<=32; i++) //prints starting from bit [0] to bit [31]
     {
         printf("%d", check_flag(&flag_holder, i-1));
         if(i%4 == 0)

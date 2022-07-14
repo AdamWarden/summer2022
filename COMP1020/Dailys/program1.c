@@ -22,7 +22,7 @@ char* reverse(char* word)
    
    for(int i=0; word[i] != '\0'; i++)
    {
-        word_end = i;
+        word_end = i; //sets word_end to the final position in array
    }
 
    while(word_begin < word_end)

@@ -41,11 +41,12 @@ Boolean vector_is_empty(VECTOR hVector){
 }
 
 
-void vector_destroy(VECTOR hVector){
+void vector_destroy(VECTOR* phVector){
 
-    Vector* pVector = (Vector*)hVector; //cast to the known type
+    Vector* pVector = (Vector*)*phVector; //cast to the known type
     free(pVector->data);
     free(pVector);
+    *phVector = NULL;
 
 }
 

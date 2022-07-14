@@ -25,7 +25,8 @@ int main(int argc, char* argv[])
     }
     
     //destruction of object
-    vector_destroy(hVector);
+    vector_destroy(&hVector);
+    hVector = NULL;
 
     return 0;
 }

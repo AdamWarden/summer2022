@@ -15,4 +15,4 @@ int vector_get_size(VECTOR hVector); //return size of array
 
 int vector_get_capacity(VECTOR hVector); //return capacity of array
 
-void vector_destroy(VECTOR hVector); //destroy opaque object
+void vector_destroy(VECTOR* phVector); //destroy opaque object

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
-#include "status.h"
 
 struct stack  //Known type
 {

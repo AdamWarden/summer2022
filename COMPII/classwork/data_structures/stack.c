@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
+#include "status.h"
 
 struct stack  //Known type
 {
@@ -52,6 +53,7 @@ Status stack_push(STACK hStack, int value)
 	}
 
 	pStack->data[pStack->size] = value;
+	printf("Pushed %d to the stack\n", value);
 	pStack->size++;
 
 	return SUCCESS;

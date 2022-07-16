@@ -1,14 +1,16 @@
 CC = gcc
-CFLAGS = -Wall --std=99
-OBJECTS = main.o 
+CFLAGS = -Wall --std=c99
+OBJECTS = main.o stack.o
 
-all: stack_execute
+all: stack
 
-stack_execute: $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o stack_execute
+stack: $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o stack
 
 main.o: main.c stack.c stack.h
 	$(CC) $(CFLAGS) -c main.c -o main.o 
+stack.o: stack.c stack.h status.h
+	$(CC) $(CFLAGS) -c stack.c -o stack.o
 
 clean:
-	rm stack_execute $(OBJECTS)
+	rm stack $(OBJECTS)

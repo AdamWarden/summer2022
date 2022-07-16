@@ -14,7 +14,6 @@ Boolean stack_is_empty(STACK hStack);
 
 int stack_top(STACK hStack, Status* pStatus); 
 
-
 void stack_destroy(STACK* phStack);
 
 #endif

@@ -7,7 +7,7 @@ struct stack  //Known type
 {
 	int size;
 	int capacity;
-	int* data;
+	char* data;
 };
 
 typedef struct stack Stack;
@@ -19,7 +19,7 @@ STACK stack_init_default(void)
 	{
 		pStack->size = 0;
 		pStack->capacity = 10;
-		pStack->data = (int*)malloc(sizeof(int) * pStack->capacity);
+		pStack->data = (char*)malloc(sizeof(char) * pStack->capacity);
 		if (pStack->data == NULL)
 		{
 			free(pStack);
@@ -29,16 +29,16 @@ STACK stack_init_default(void)
 	return pStack;
 }
 
-Status stack_push(STACK hStack, int value)
+Status stack_push(STACK hStack, char value)
 {
 	Stack* pStack = (Stack*)hStack;
 
-	int* temp;
+	char* temp;
 	int i;
 
 	if (pStack->size >= pStack->capacity) //if there is not room then make room.
 	{
-		temp = malloc(sizeof(int) * (pStack->capacity * 2));
+		temp = malloc(sizeof(char) * (pStack->capacity * 2));
 		if (temp == NULL)
 		{
 			return FAILURE;
@@ -53,7 +53,7 @@ Status stack_push(STACK hStack, int value)
 	}
 
 	pStack->data[pStack->size] = value;
-	printf("Pushed %d to the stack\n", value);
+	printf("Pushed %c to the stack\n", value);
 	pStack->size++;
 
 	return SUCCESS;
@@ -94,6 +94,14 @@ int stack_top(STACK hStack, Status* pStatus)
 		*pStatus = SUCCESS;
 	}
 	return pStack->data[pStack->size - 1];
+}
+
+void clear_keyboard_buffer(void)
+{
+	char c;
+	do {
+		c = getchar();
+	}	while(c != '\n' && c != EOF);
 }
 
 void stack_destroy(STACK* phStack)

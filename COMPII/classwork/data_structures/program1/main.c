@@ -38,21 +38,8 @@ int main(int argc, char* argv[])
 	
 	return 0;
 	*/
-
-	STACK hStack;
 	int i;
-	
-	hStack = stack_init_default();
-	//initilize the stack
-	if (hStack == NULL)
-	{
-		printf("Failed to allocate space for stack object.\n");
-		exit(1);
-	}
-
 	int cases;
-	char string;
-	char index[] = {'(', ')', '[', ']', '{', '}'};
 
 	printf("How many testing cases?\n");
 	scanf("%d", &cases);
@@ -60,19 +47,16 @@ int main(int argc, char* argv[])
 
 	printf("\nEnter string:\n");
 
-	for(i = 0; i<cases; i++)
+	for(i = 0; i<cases; i++) //case by case testing
 	{
-		scanf("%c", &string);
-		
-		if(string != index[i])
+		if(read_string())
 		{
-			printf("Invalid string character\n"); //error on first string
+			printf("Yes\n");
 		}
-		
-		printf("%c\n", string); //check value of string
-		stack_push(hStack, string);
-		clear_keyboard_buffer();
+		else
+		{
+			printf("No\n");
+		}
 	}
-	
-    return string;
+    return 0;
 }

@@ -29,7 +29,7 @@ STACK stack_init_default(void)
 	return pStack;
 }
 
-Status stack_push(STACK hStack, char value)
+Status stack_push(STACK hStack, char* value)
 {
 	Stack* pStack = (Stack*)hStack;
 
@@ -38,7 +38,7 @@ Status stack_push(STACK hStack, char value)
 
 	if (pStack->size >= pStack->capacity) //if there is not room then make room.
 	{
-		temp = malloc(sizeof(char) * (pStack->capacity * 2));
+		temp = malloc(sizeof(char*) * (pStack->capacity * 2));
 		if (temp == NULL)
 		{
 			return FAILURE;
@@ -53,7 +53,7 @@ Status stack_push(STACK hStack, char value)
 	}
 
 	pStack->data[pStack->size] = value;
-	printf("Pushed %c to the stack\n", value);
+	printf("Pushed %s to the stack\n", value);
 	pStack->size++;
 
 	return SUCCESS;
@@ -77,7 +77,7 @@ Boolean stack_is_empty(STACK hStack)
 	return (Boolean)(pStack->size <= 0);
 }
 
-int stack_top(STACK hStack, Status* pStatus)
+char stack_top(STACK hStack, Status* pStatus)
 {
 	Stack* pStack = (Stack*)hStack;  //Cast to the known type
 	if (stack_is_empty(hStack))
@@ -102,6 +102,62 @@ void clear_keyboard_buffer(void)
 	do {
 		c = getchar();
 	}	while(c != '\n' && c != EOF);
+}
+
+Boolean read_string(void)
+{
+	char string;
+	char top;
+	Boolean match_status = TRUE;
+	STACK hStack = stack_init_default();
+	//initilize the stack
+	if (hStack == NULL)
+	{
+		printf("Failed to allocate space for stack object.\n");
+		exit(1);
+	}
+
+	scanf("%c", &string);
+	while(string == '(' || string == ')' || string == '[' || string == ']' || string == "{" || string == '}')
+	{
+		if(string == '(' || string == '[' || string == '{') //starts with opening character
+		{
+			stack_push(hStack, string);
+		}
+		top = stack_top(hStack, NULL);
+		if(string == ')')
+		{
+			if(top == '(')
+			{
+				stack_pop(hStack);
+			}
+			match_status = FAILURE;
+		}
+		else if(string == ']')
+		{
+			if(top == '[')
+			{
+				stack_pop(hStack);
+			}
+			match_status = FAILURE;
+		}
+
+		else if(string == '}')
+		{
+			if(top == '{')
+			{
+				stack_pop(hStack);
+			}
+			match_status = FAILURE;
+		}
+		scanf("%c", &string);
+	}
+	if(!stack_is_empty(hStack) && string != '\n')
+	{
+		match_status = FAILURE;
+	}
+	stack_destroy(&hStack);
+	return match_status;	
 }
 
 void stack_destroy(STACK* phStack)

@@ -12,7 +12,7 @@ Node* head_sum = NULL;
 head_insert(&head1, 9);
 head_insert(&head1, 8);
 head_insert(&head1, 1);
-print_list(reverse_list(head1));
+print_list(head1);
 //create a list for the number 11
 head_insert(&head2, 1);
 head_insert(&head2, 1);
@@ -68,8 +68,8 @@ void head_insert(Node** head_ref, int new_data)
 
 Node* list_sum(Node* head_ref, Node* head_ref2)
 {
-    reverse_list(head_ref);
-    reverse_list(head_ref2);
+    print_list(reverse_list(head_ref));
+    print_list(reverse_list(head_ref2));
 
     Node* result_head = NULL;
     Node *temp = NULL;

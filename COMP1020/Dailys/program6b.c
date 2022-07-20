@@ -2,13 +2,6 @@
 #include<stdio.h>
 #include "program6b.h"
 
-struct node
-{
-    struct Node* next;
-    int* data;
-};
-typedef struct node Node;
-
 int main(int argc, char* argv[])
 {
 //add up 189 + 11
@@ -19,10 +12,16 @@ Node* head_sum = NULL;
 head_insert(&head1, 9);
 head_insert(&head1, 8);
 head_insert(&head1, 1);
+print_list(reverse_list(head1));
 //create a list for the number 11
 head_insert(&head2, 1);
 head_insert(&head2, 1);
+print_list(head2);
+
+
+
 head_sum = list_sum(head1, head2);
+
 printf("The sum of ");
 print_list(head1);
 printf(" + ");
@@ -32,81 +31,80 @@ printf(" = ");
 print_list(head_sum);
 printf("\n");
 //clean up three lists
+/*
 destroy_list(head1); head1 = NULL;
 destroy_list(head2); head2 = NULL;
 destroy_list(head_sum); head_sum = NULL;
 return 0;
+*/
 }
 
-void reverse_list(Node** head_ref)
+Node* reverse_list(Node* head_ref)
 {
-    Node* previous = NULL;
-    Node* current = *head_ref; 
-    Node* next = NULL;
-    
-    while(current != NULL)
+    if(head_ref == NULL || head_ref->next == NULL)
     {
-        next = current->next;
-        current->next = previous;
-        previous = current;
-        current = next;
+        return head_ref;
     }
-    *head_ref = previous;
+    Node* result_head = reverse_list(head_ref->next);
+    head_ref->next->next = head_ref;
+    head_ref->next = NULL;
+    return result_head;
+}
+
+Node* newNode(int data)
+{
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    new_node->data = data;  
+    new_node->next = NULL;
+    return new_node;
 }
 
 void head_insert(Node** head_ref, int new_data)
 {
-    Node* new_node = (Node*)malloc(sizeof(Node));
-    new_node->data = data;    
+    Node* new_node = newNode(new_data); 
     new_node->next = (*head_ref);
     (*head_ref) = new_node;
 }
 
-Node* list_sum(Node* head1, Node head2)
+Node* list_sum(Node* head_ref, Node* head_ref2)
 {
-    Node* new_head = NULL;
-    Node* temp = NULL;
-    Node* prev = NULL;
+    reverse_list(head_ref);
+    reverse_list(head_ref2);
+
+    Node* result_head = NULL;
+    Node *temp = NULL;
+    Node *prev = NULL;
     int carry = 0;
     int sum;
 
-    while(head1 != NULL || head2 != NULL)
+    while(head_ref != NULL || head_ref2 != NULL)
     {
-        sum = carry + head1->data + head2->data;
-        if(sum >= 10)
-        {
-            carry = 1;
-            sum = sum % 10;
-        }
-        Node* temp = (Node*)malloc(sizeof(Node));
-        temp->data = data;
-        temp->next = NULL;
+        sum = carry + (head_ref ? head_ref->data : 0) + (head_ref2 ? head_ref2->data : 0);
+        carry = (sum >= 10) ? 1: 0;
+        sum = sum % 10;
 
-        if(new_head == NULL)
-        {
-            new_head = temp;
-        }
+        temp = newNode(sum);
+
+        if(result_head == NULL)
+            result_head = temp;
+        
         else
-        {
             prev->next = temp;
-        }
+        
         prev = temp;
-        if(head1)
-        {
-            head1 = head1->next;
-        }
-        if(head2)
-        {
-            head2 = head2->next;
-        }
+        if(head_ref)
+            head_ref = head_ref->next;
+
+        if(head_ref2)
+            head_ref2 = head_ref2->next;
+        
     }
     if(carry > 0)
-    {
-        temp->next = (Node*)malloc(sizeof(Node));
-        temp->next->data = carry;
-        temp->next->next = NULL;
-    }
-    return new_head;
+        temp->next = newNode(carry);
+
+    reverse_list(result_head);
+
+    return result_head;
 }
 
 void print_list(Node* node)
@@ -118,3 +116,17 @@ void print_list(Node* node)
     }
     printf("\n");
 }
+/*
+void destroy_list(Node** head_ref)
+{
+    Node* current = *head_ref;
+    Node* next;
+    while(current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    *head_ref = NULL;
+}
+*/

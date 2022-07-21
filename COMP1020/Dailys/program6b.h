@@ -24,4 +24,4 @@ Node* list_sum(Node* head_ref, Node* head_ref2);
 
 void print_list(Node* node);
 
-//void destroy_list(Node** head_ref);
+void destroy_list(Node* head_ref);

@@ -21,7 +21,7 @@ VECTOR vector_init_default(void){
         pVector->data = (int*)malloc(sizeof(int) * pVector->capacity);
 
         if(pVector->data == NULL){
-
+            printf("failed to allocate memory\n");
             free(pVector);
             return NULL;
         }

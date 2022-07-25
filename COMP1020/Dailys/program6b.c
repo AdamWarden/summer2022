@@ -63,20 +63,21 @@ void head_insert(Node** head_ref, int new_data)
 
 Node* list_sum(Node* head_ref, Node* head_ref2)
 {
-    head_ref = reverse_list(head_ref); //reverse the first list
-    head_ref2 = reverse_list(head_ref2); //reverse the second list
-
+     
     Node* result_head = NULL;
     Node *temp = NULL;
     Node *prev = NULL;
     int carry = 0;
     int sum;
 
+    Node* new_head_ref = reverse_list(head_ref);
+    Node* new_head_ref2 = reverse_list(head_ref2);
+
     while(head_ref != NULL || head_ref2 != NULL)
     {
         if(head_ref == NULL) //if first list is empty
         {
-            sum = carry + head_ref2->data; //sum = carry + second list's data
+            sum = carry +  head_ref2->data; //sum = carry + second list's data
             if(sum >= 10)
             {
                 carry = 1; //remainder is 1
@@ -104,7 +105,7 @@ Node* list_sum(Node* head_ref, Node* head_ref2)
         }
         else
         {
-            if(head_ref->data >= 10) //if first list's data exceeds two digits
+            if(new_head_ref->data >= 10) //if first list's data exceeds two digits
             {
                 sum = head_ref->data % 10 + head_ref2->data + carry; //sum = first list's data mod 10 + second list's data + carry
                 carry = 1; //remainder from overflow of digits in first list is 1
@@ -141,12 +142,12 @@ Node* list_sum(Node* head_ref, Node* head_ref2)
         
         prev = temp; //set the previous node to the new node
 
-        if(head_ref) //if first list is not empty
+        if(new_head_ref) //if first list is not empty
         {
             head_ref = head_ref->next; //move first list to the next node
         }
 
-        if(head_ref2) //if second list is not empty
+        if(new_head_ref2) //if second list is not empty
         {
             head_ref2 = head_ref2->next; //move second list to the next node
         }
@@ -155,9 +156,9 @@ Node* list_sum(Node* head_ref, Node* head_ref2)
     {
         temp->next = newNode(carry); //if carry is 1, add a new node with the carry
     }
-    
-    head_ref = reverse_list(head_ref); //reverse the list back to normal
-    head_ref2 = reverse_list(head_ref2); //reverse the list back to normal
+
+    reverse_list(new_head_ref); //reverse the first list back to normal
+    reverse_list(new_head_ref2); //reverse the second list back to normal
 
     result_head = reverse_list(result_head); //reverse the result list back to normal
     return result_head;

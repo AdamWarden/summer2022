@@ -24,5 +24,12 @@
 		"node": "latest",
 		"python": "latest",
 		"powershell": "latest"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot"
+			]
+		}
 	}
 }

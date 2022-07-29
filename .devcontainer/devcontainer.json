@@ -28,10 +28,14 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+<<<<<<< HEAD
 				"GitHub.copilot",
 				"formulahendry.code-runner",
 				"WakaTime.vscode-wakatime",
 				"ms-vscode.cpptools"
+=======
+				"GitHub.copilot"
+>>>>>>> db9b15125066d3585946a4feb463bfa2ee0b7395
 			]
 		}
 	}

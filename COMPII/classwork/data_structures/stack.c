@@ -104,6 +104,17 @@ void clear_keyboard_buffer(void)
 	}	while(c != '\n' && c != EOF);
 }
 
+void print_stack(STACK hStack)
+{
+	Stack* pStack = (Stack*)hStack;  //Cast to the known type
+	int i;
+	for (i = 0; i < pStack->size; i++)
+	{
+		printf("%c ", pStack->data[i]);
+	}
+	printf("\n");
+}
+
 void stack_destroy(STACK* phStack)
 {
 	Stack* pStack = (Stack*)*phStack;

@@ -16,6 +16,8 @@ int stack_top(STACK hStack, Status* pStatus);
 
 void stack_destroy(STACK* phStack);
 
+void print_stack(STACK hStack);
+
 void clear_keyboard_buffer(void);
 
 #endif

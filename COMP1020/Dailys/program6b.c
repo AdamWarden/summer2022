@@ -1,188 +1,125 @@
+#include <stdio.h>
 #include <stdlib.h>
-#include<stdio.h>
 #include "program6b.h"
 
 int main(int argc, char* argv[])
 {
-//add up 189 + 11
-Node* head1 = NULL;
-Node* head2 = NULL;
-Node* head_sum = NULL;
-//create a list for the number 189
-head_insert(&head1, 9);
-head_insert(&head1, 8);
-head_insert(&head1, 1);
-//create a list for the number 11
-head_insert(&head2, 1);
-head_insert(&head2, 1);
+    Node* head1 = NULL;
+    Node* head2 = NULL;
+    Node* head_sum = NULL;
 
-head_sum = list_sum(head1, head2);
+    head_insert(&head1, 9);
+    head_insert(&head1, 8);
+    head_insert(&head1, 1);
 
-printf("The sum of ");
-print_list(head1); //prints wrong number
-printf(" + ");
-print_list(head2); //prints wrong number
-printf("\n");
-printf(" = ");
-print_list(head_sum);
-printf("\n");
-//clean up three lists
-destroy_list(head1); head1 = NULL;
-destroy_list(head2); head2 = NULL;
-destroy_list(head_sum); head_sum = NULL;
-return 0;
+    head_insert(&head2, 1);
+    head_insert(&head2, 1);
+    
+    head_sum = list_sum(head1, head2); //messes up head1 & head2
 
+    printf("The sum of ");
+    print_list(head1);
+    printf(" + ");
+    print_list(head2);
+    printf("\n");
+    printf(" = ");
+    print_list(head_sum);
+    printf("\n");
+
+    destroy_list(head1); head1 = NULL;
+    destroy_list(head2); head2 = NULL;
+    destroy_list(head_sum); head_sum = NULL;
+    return 0;
 }
 
-Node* reverse_list(Node* head_ref)
+Node* reverse_list(Node** head_ref)
 {
-    if(head_ref == NULL || head_ref->next == NULL)
+    Node* prev = NULL;
+    Node* curr = *head_ref;
+    Node* next = NULL;
+
+    while (curr != NULL)
     {
-        return head_ref;
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
     }
-    Node* result_head = reverse_list(head_ref->next);
-    head_ref->next->next = head_ref;
-    head_ref->next = NULL;
-    return result_head;
+
+    *head_ref = prev;
+    return *head_ref;
 }
 
-Node* newNode(int data)
+void print_list(Node* head)
+{
+    Node* curr = head;
+    while (curr != NULL)
+    {
+        printf("%d ", curr->data);
+        curr = curr->next;
+    }
+}
+
+void head_insert(Node** head_ref, int data)
 {
     Node* new_node = (Node*)malloc(sizeof(Node));
-    new_node->data = data;  
-    new_node->next = NULL;
-    return new_node;
+    new_node->data = data;
+    new_node->next = *head_ref;
+    *head_ref = new_node;
 }
 
-void head_insert(Node** head_ref, int new_data)
+Node* list_sum(Node* head_ref, Node* head_ref2) //without changing the head1 and head 2 lists
 {
-    Node* new_node = newNode(new_data); 
-    new_node->next = (*head_ref);
-    (*head_ref) = new_node;
+    Node* head_sum = NULL; //head of the sum list
+    Node* curr = head_ref; //current node in the first list
+    Node* curr2 = head_ref2; //current node in the second list
+    
+    curr = reverse_list(&head_ref); //reverse the first list to match digits
+    curr2 = reverse_list(&head_ref2); //reverse the second list to match digits
+    
+    int carry = 0; //carry for the sum of the two lists
+    int sum = 0; //sum of the two lists
+    int data = 0; //data for the new node in the sum list
+    
+    while (curr != NULL || curr2 != NULL) //while at least one list is not empty
+    {
+        if (curr != NULL) //if the first list is not empty
+        {
+            sum = curr->data + carry; //add the carry to the first list's data
+            curr = curr->next; //move on to the next node in the first list
+        }
+        else //if the first list is empty
+        {
+            sum = carry; //add the carry to the first list's data
+        }
+        if (curr2 != NULL) //if the second list is not empty
+        {
+            sum += curr2->data; //add the second list's data to the sum
+            curr2 = curr2->next; //move on to the next node in the second list
+        }
+        data = sum % 10; //get the last digit of the sum
+        carry = sum / 10; //get the carry for the next iteration
+        head_insert(&head_sum, data); //insert the last digit of the sum into the sum list
+    }
+    if (carry > 0) //if there is a carry left over
+    {
+        head_insert(&head_sum, carry); //insert the carry into the sum list
+    }
+
+    reverse_list(&head_ref); //reverse the first list back to the original order
+    reverse_list(&head_ref2); //reverse the second list back to the original order
+
+    return head_sum; //return the head of the sum list
 }
 
-Node* list_sum(Node* head_ref, Node* head_ref2)
+void destroy_list(Node* head)
 {
-     
-    Node* result_head = NULL;
-    Node *temp = NULL;
-    Node *prev = NULL;
-    int carry = 0;
-    int sum;
-
-    Node* new_head_ref = reverse_list(head_ref);
-    Node* new_head_ref2 = reverse_list(head_ref2);
-
-    while(head_ref != NULL || head_ref2 != NULL)
+    Node* curr = head;
+    Node* next = NULL;
+    while (curr != NULL)
     {
-        if(head_ref == NULL) //if first list is empty
-        {
-            sum = carry +  head_ref2->data; //sum = carry + second list's data
-            if(sum >= 10)
-            {
-                carry = 1; //remainder is 1
-                sum = sum % 10;
-            }
-            else
-            {
-                carry = 0; //otherwise, remainder is 0
-            }
-            sum = sum % 10;
-        }
-        else if(head_ref2 == NULL) //if second list is empty
-        {
-            sum = carry + head_ref->data; //sum = carry + first list's data
-            if(sum >= 10)
-            {
-                carry = 1; //remainder is 1
-                sum = sum % 10;
-            }
-            else
-            {
-                carry = 0; //otherwise, remainder is 0
-            }
-            sum = sum % 10;
-        }
-        else
-        {
-            if(new_head_ref->data >= 10) //if first list's data exceeds two digits
-            {
-                sum = head_ref->data % 10 + head_ref2->data + carry; //sum = first list's data mod 10 + second list's data + carry
-                carry = 1; //remainder from overflow of digits in first list is 1
-            }
-            else
-            {
-                sum = head_ref->data + head_ref2->data + carry; //sum = first list's data + second list's data + carry
-                carry = 0; //first list's data is less than 10, so remainder is 0
-            }
-            if(sum >= 10) //if sum exceeds two digits
-            {
-                carry = 1; //remainder is 1
-                sum = sum % 10;
-            }
-            else
-            {
-                carry = 0; //otherwise, remainder is 0
-            }
-            sum = sum % 10; 
-        }
-        
-        sum = sum % 10;
-
-        temp = newNode(sum); //create a new node with the sum
-
-        if(result_head == NULL) //if result list is empty
-        {
-            result_head = temp; //set result list to the new node
-        }
-        else
-        {
-            prev->next = temp; //set the previous node's next to the new node
-        }
-        
-        prev = temp; //set the previous node to the new node
-
-        if(new_head_ref) //if first list is not empty
-        {
-            head_ref = head_ref->next; //move first list to the next node
-        }
-
-        if(new_head_ref2) //if second list is not empty
-        {
-            head_ref2 = head_ref2->next; //move second list to the next node
-        }
+        next = curr->next;
+        free(curr);
+        curr = next;
     }
-    if(carry > 0)
-    {
-        temp->next = newNode(carry); //if carry is 1, add a new node with the carry
-    }
-
-    reverse_list(new_head_ref); //reverse the first list back to normal
-    reverse_list(new_head_ref2); //reverse the second list back to normal
-
-    result_head = reverse_list(result_head); //reverse the result list back to normal
-    return result_head;
-}
-
-void print_list(Node* node)
-{
-    while(node != NULL)
-    {
-        printf("%d", node->data);
-        node = node->next;
-    }
-    printf("\n");
-}
-
-void destroy_list(Node* head_ref)
-{
-    Node* current = head_ref;
-    Node* next;
-    while(current != NULL)
-    {
-        next = current->next;
-        free(current);
-        current = next;
-    }
-    head_ref = NULL;
 }

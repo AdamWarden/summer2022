@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     head_insert(&head2, 1);
     head_insert(&head2, 1);
     
-    head_sum = list_sum(head1, head2); //messes up head1 & head2
+    head_sum = list_sum(head1, head2);
 
     printf("The sum of ");
     print_list(head1);

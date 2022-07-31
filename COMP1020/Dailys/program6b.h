@@ -1,27 +1,23 @@
-/*
+#include <stdio.h>
+#include <stdlib.h>
+#include "status.h"
+
+//define node structure
 struct node;
 typedef struct node Node;
 
 struct node
 {
-    Node* next;
-    int* data;
+	int data;
+	Node* next;
 };
-*/
 
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
+Node* reverse_list(Node** head_ref);
 
-Node* reverse_list(Node* head_ref);
+void print_list(Node* head);
 
-Node* newNode(int data);
-
-void head_insert(Node** head_ref, int new_data);
+void head_insert(Node** head_ref, int data);
 
 Node* list_sum(Node* head_ref, Node* head_ref2);
 
-void print_list(Node* node);
-
-void destroy_list(Node* head_ref);
+void destroy_list(Node* head);

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #define SIZE 1000
 
+//what is insertion sort?
+//insertion sort is a sorting algorithm that works by taking an unsorted list and inserting each element into the correct position in the sorted list.
+
 void vanilla_insertion_sort(int numbers[], int size);
 void insertion_sort_with_shifting(int numbers[], int size);
 void insertion_sort(int numbers[], int size);

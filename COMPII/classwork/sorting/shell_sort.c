@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #define SIZE 10
 
+//what is shell sort?
+//shell sort is a sorting algorithm that works by successively inserting elements into the array.
+
 void shell_sort(int numbers[], int size);
 void print_array(int arr[], int size);
 

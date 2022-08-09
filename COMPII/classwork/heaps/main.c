@@ -8,6 +8,9 @@
 //fix_up: if the parent is bigger than the child, swap them
 //fix_down: if the child is bigger than the parent, swap them
 
+//what is heapify?
+//heapify: calling fix_down on all the nodes except leaf nodes
+
 void heap_insert(int heap[], int *size, int value);
 void fix_up(int heap[], int index);
 void heap_remove_max(int heap[], int *size);

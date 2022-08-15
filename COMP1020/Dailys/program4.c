@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
 void set_flag(unsigned int* flag_holder, int flag_position)
 {
-    *flag_holder += (1 << flag_position);
+    *flag_holder = *flag_holder | (1 << flag_position);
 }
 
 int check_flag(unsigned int flag_holder, int flag_position)
@@ -33,7 +33,9 @@ int check_flag(unsigned int flag_holder, int flag_position)
 
 void unset_flag(unsigned int* flag_holder, int flag_position)
 {
-    *flag_holder ^= (1 << flag_position); //XOR will copy the bit set in one number but not both
+    *flag_holder &= ~(1 << flag_position); 
+    //&= returns 1 if both operands are 1 and 0 if either operand is 0
+    //~ returns 1 if operand is 0 and 0 if operand is 1
     /*
     1000 0000 0000 0001 0000 0000 0000 1000 : set_flag @ flag_position = 31
     1 << 31 

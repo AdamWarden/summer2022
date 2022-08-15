@@ -5,6 +5,7 @@
 
 int main(int argc, char* argv[])
 {
+    /*
     int count;
     int i;
 
@@ -13,7 +14,8 @@ int main(int argc, char* argv[])
     printf("Enter an expression:\n");
     for(i = 0; i < count; i++)
     {
-        char* expression = (char*)malloc(sizeof(char) * 100);
+        //allows for maximum size character input array in C
+        char* expression = (char*)malloc(sizeof(char)*CHAR_MAX);
         scanf("%s", expression);
         if(stack_balanced(expression))
         {
@@ -25,9 +27,22 @@ int main(int argc, char* argv[])
         }
         free(expression);
     }
-    /*
-    char* expression = "((()))";
-    printf("%d\n", stack_balanced(expression));
+    return 0;
     */
+   int i, count;
+   scanf("%d", &count); //number of expressions to test
+   clear_keyboard_buffer();
+
+   for(i=0; i<count; i++)
+   {
+        if(stack_balanced()) //calls to enter string
+        {
+            printf("Yes\n");
+        }
+        else
+        {
+            printf("No\n");
+        }
+   }
     return 0;
 }

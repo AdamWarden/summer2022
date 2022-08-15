@@ -27,7 +27,9 @@ int main(int argc, char* argv[])
 
 void set_flag(int* pFlag_holder, int flag_position) //change to 1 without changing other bits
 {
-    *pFlag_holder += (1 << flag_position); //flag holder is updated with 1 left shifted by flag_position
+    *pFlag_holder = *pFlag_holder | (1 << flag_position); 
+    //if you use &, you will get 0 if the bit is 0 and 1 if the bit is 1
+    //use or because you want to change the bit to 1 if it is 0
     //ie. flag_position = 3
     //1<<3 = 8
 }

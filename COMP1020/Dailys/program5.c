@@ -11,7 +11,8 @@ int main(int argc, char* argv[])
     unsigned int flag_holder[5] = { 0 }; //Set the first integer to zero and all others to zero by default.
     set_flag(flag_holder, 3);
     set_flag(flag_holder, 16);
-    set_flag(flag_holder, 31);
+    set_flag(flag_holder, 31); 
+    
     set_flag(flag_holder, 87);
     display_flags(flag_holder, 5);
     printf("\n\n");
@@ -28,6 +29,11 @@ void set_flag(unsigned int flag_holder[], int flag_position)
 {
     int index = flag_position/32; //index variable to reference flag_position in array out of 32 bits
     flag_holder[index] = flag_holder[index] | (1 << flag_position); //changed to reference array
+    //check that flag position is within bounds of array
+    if (flag_position < 0 || flag_position >= 32)
+    {
+        printf("Flag position is out of bounds.\n");
+    }
 }
 
 int check_flag(unsigned int flag_holder[], int flag_position)
@@ -35,12 +41,20 @@ int check_flag(unsigned int flag_holder[], int flag_position)
 {
     int index = flag_position/32;
     return (flag_holder[index] >> (flag_position) & 1);
+    if (flag_position < 0 || flag_position >= 32)
+    {
+        printf("Flag position is out of bounds.\n");
+    }
 }
 
 void unset_flag(unsigned int flag_holder[], int flag_position)
 {
    int index = flag_position/32;
-   flag_holder[index] ^= (1 << flag_position);
+   flag_holder[index] &= ~(1 << flag_position);
+   if (flag_position < 0 || flag_position >= 32)
+    {
+        printf("Flag position is out of bounds.\n");
+    }
 }
 
 void display_flags_as_array(unsigned int flag_holder)

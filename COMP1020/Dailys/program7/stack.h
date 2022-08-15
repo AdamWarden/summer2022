@@ -14,7 +14,7 @@ char stack_top(STACK hStack, Status* pStatus);
 
 Boolean stack_is_empty(STACK hStack);
 
-Boolean stack_balanced(char* expression); //returns true if the expression is balanced
+Boolean stack_balanced(); 
 
 void clear_keyboard_buffer(void);
 

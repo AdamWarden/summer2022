@@ -10,29 +10,39 @@ QUEUE queue_init_default(void)
         free(queue);
         return NULL;
     }
+    queue->size = 0;
     queue->head = NULL;
     queue->tail = NULL;
     return queue;
 }
 
-int queue_front(QUEUE hQueue)
+int queue_front(QUEUE hQueue, Status* pStatus)
 {
-    Queue* queue = (Queue*)hQueue;
-    if (queue->head == NULL)
+   Queue* queue = (Queue*)hQueue;
+    if(queue_is_empty(hQueue))
     {
-        return 0;
+        if(pStatus != NULL)
+        {
+            *pStatus = FAILURE;
+        }
+        return -1337;
     }
+    if(pStatus != NULL)
+    {
+        *pStatus = SUCCESS;
+    }
+    Status status;
+    queue_front(hQueue, &status);
+    queue_front(hQueue, NULL);
+
     return queue->head->data;
 }
 
 Boolean queue_is_empty(QUEUE hQueue)
 {
     Queue* queue = (Queue*)hQueue;
-    if (queue->head == NULL)
-    {
-        return TRUE;
-    }
-    return FALSE;
+    
+    return (Boolean)(queue->size <= 0);
 }
 
 Status queue_enqueue(QUEUE hQueue, int data)

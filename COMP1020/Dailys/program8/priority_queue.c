@@ -171,31 +171,28 @@ void fix_down(Queue *hQueue, int index) //all children are smaller than parent k
 
     Heap temp; //temporary variable to hold the data of the parent node
 
-    if(left_child < pQueue->size) //if the left child is not out of bounds
+    if(left_child < pQueue->size && right_child < pQueue->size) //if the left and right children are not out of bounds
     {
-        if(right_child < pQueue->size) //if the right child is not out of bounds
+        if(pQueue->data[left_child].priority > pQueue->data[right_child].priority) //if the left child has the highest priority
         {
-            largest_child = left_child; //set the largest child to the left child
+            largest_child = left_child;
         }
-        else
+        else //if the right child has the highest priority
         {
-            if(pQueue->data[left_child].priority > (pQueue->data[right_child].priority)) //if left is bigger than right
-            {
-                largest_child = left_child;
-            }
-            else
-            {
-                largest_child = right_child;
-            }
+            largest_child = right_child;
         }
-        if(pQueue->data[index].priority < pQueue->data[largest_child].priority) //if the parent is smaller than the largest child
-        {
-            //swap the parent and the largest child
-            temp = pQueue->data[index];
-            pQueue->data[index] = pQueue->data[largest_child];
-            pQueue->data[largest_child] = temp;
-            fix_down(pQueue, largest_child);
-        }
+    }
+    else if(left_child < pQueue->size && right_child >= pQueue->size)
+    {
+        largest_child = left_child;
+    }
+    else if(left_child >= pQueue->size && right_child < pQueue->size)
+    {
+        largest_child = right_child;
+    }
+    else
+    {
+        return;
     }
 }
 

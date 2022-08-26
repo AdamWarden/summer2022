@@ -14,6 +14,7 @@ struct node
 
 struct queue
 {
+	int size;
 	Node* head;
 	Node* tail;
 };
@@ -23,7 +24,7 @@ typedef void* QUEUE;
 
 QUEUE queue_init_default(void);
 
-int queue_front(QUEUE hQueue);
+int queue_front(QUEUE hQueue, Status* pStatus);
 
 Boolean queue_is_empty(QUEUE hQueue);
 

@@ -72,14 +72,13 @@ Status bit_flags_set_flag(BIT_FLAGS hBit_flags, int flag_position) //set flag at
     if ((flag_position) >= pBit_flags->capacity) //if the position is out of bounds
     {
         //pTemp = (int*)malloc(sizeof(int) * (pBit_flags->capacity + size_of_int)); //allocates more memory than needed
-        pTemp = realloc(hBit_flags, flag_position - pBit_flags->capacity); 
-        //reallocate the memory to fit by increasing the capacity by the difference betweenthe position and capacity
+        pTemp = (int*)malloc((index * sizeof(int)) + (flag_position - pBit_flags->capacity));
         if (pTemp == NULL)
         {
             printf("Failed to allocate more memory\n");
             return FAILURE;
         }
-        else
+        else //if memory was successfully allocated
         {
             for (i=0; i<pBit_flags->size; i++) //copy old data to new memory
             {
@@ -87,7 +86,7 @@ Status bit_flags_set_flag(BIT_FLAGS hBit_flags, int flag_position) //set flag at
             }
             free(pBit_flags->data); //free old memory
             pBit_flags->data = pTemp; //set new memory to old memory
-            pBit_flags->capacity = flag_position + 1; //set new capacity to new position
+            pBit_flags->capacity = flag_position + 1; //set new capacity to new position + 1
         }
     }
     index = flag_position / size_of_int; //find index of int to set flag in
@@ -157,23 +156,24 @@ int bit_flags_check_flag(BIT_FLAGS hBit_flags, int flag_position)
     Bit_flags* pBit_flags = (Bit_flags*)hBit_flags; //cast to the known type
     int bit = 0;
     int i, j;
-    int size_of_int = sizeof(int)*8;
+    int size_of_int = sizeof(int)*4; //size of int in bytes
 
     if(pBit_flags == NULL)
     {
         printf("Bit flags object is NULL\n");
-        return -1;
+        return -37;
     }
-    else if(flag_position < 0 || flag_position > pBit_flags->capacity)
+    else if(flag_position < 0 || flag_position > pBit_flags->capacity) //if the position is out of bounds
     {
         printf("Flag position is out of bounds\n");
-        return -1;
+        return -37;
     }
     else
     {
         i = flag_position / size_of_int; //find index of int to check in
         j = flag_position % size_of_int; //find bit to check in int
-        return (pBit_flags->data[i] & (1 << j)) != 0; //returns 1 if bit is set, 0 if bit is not set
+        return (pBit_flags->data[i] & (1 << j)) != 0; 
+
     }
 }
 

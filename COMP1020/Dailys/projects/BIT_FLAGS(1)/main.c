@@ -5,8 +5,8 @@
 int main(int argc, char* argv[])
 {
     BIT_FLAGS bit_flags = bit_flags_init_number_of_bits(8);
-    bit_flags_set_flag(bit_flags, 100); //set bit 100
-    bit_flags_set_flag(bit_flags, 1); //set bit 1
+    bit_flags_set_flag(bit_flags, 0); //set bit 0
+    bit_flags_set_flag(bit_flags, 100); //set bit 1
     bit_flags_set_flag(bit_flags, 2); //set bit 2
     bit_flags_set_flag(bit_flags, 3); //set bit 3
     bit_flags_set_flag(bit_flags, 4); //set bit 4
@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
     printf("%d\n", bit_flags_check_flag(bit_flags, 3)); //check bit 3
     printf("%d\n", bit_flags_check_flag(bit_flags, 4)); //check bit 4
     printf("%d\n", bit_flags_check_flag(bit_flags, 5)); //check bit 5
-    printf("%d\n", bit_flags_check_flag(bit_flags, 6)); //check bit 6
-    printf("%d\n", bit_flags_check_flag(bit_flags, 100)); //check bit 100
+    printf("%d\n", bit_flags_check_flag(bit_flags, 100)); //check bit 6
+    printf("%d\n", bit_flags_check_flag(bit_flags, 7)); //check bit 100
     bit_flags_destroy(bit_flags); //free memory
     return 0; 
 }

@@ -71,6 +71,7 @@ Status bit_flags_set_flag(BIT_FLAGS hBit_flags, int flag_position) //set flag at
     Bit_flags* pBit_flags = (Bit_flags*)hBit_flags; //cast to the known type
     if ((flag_position) >= pBit_flags->capacity) //if the position is out of bounds
     {
+        //60 
         //pTemp = (int*)malloc(sizeof(int) * (pBit_flags->capacity + size_of_int)); //allocates more memory than needed
         pTemp = (int*)malloc((index * sizeof(int)) + (flag_position - pBit_flags->capacity));
         if (pTemp == NULL)
@@ -107,7 +108,7 @@ Status bit_flags_unset_flag(BIT_FLAGS hBit_flags, int flag_position) //unset fla
     if (flag_position >= pBit_flags->capacity) //if the position is out of bounds
     {
         //pTemp = (int*)malloc(sizeof(int) * (pBit_flags->capacity + size_of_int)); //allocates more memory
-        pTemp = realloc(hBit_flags, flag_position - pBit_flags->capacity); //reallocate the memory to fit by increasing the capacity by the difference betweenthe position and capacity
+        pTemp = (int*)malloc((index * sizeof(int)) + (flag_position - pBit_flags->capacity));
         if (pTemp == NULL)
         {
             printf("Could not resize bit flags object");
@@ -121,7 +122,6 @@ Status bit_flags_unset_flag(BIT_FLAGS hBit_flags, int flag_position) //unset fla
             }
             free(pBit_flags->data);
             pBit_flags->data = pTemp;
-            //pBit_flags->capacity += size_of_int;
             pBit_flags->capacity = flag_position + 1;
         }
     }
@@ -172,7 +172,7 @@ int bit_flags_check_flag(BIT_FLAGS hBit_flags, int flag_position)
     {
         i = flag_position / size_of_int; //find index of int to check in
         j = flag_position % size_of_int; //find bit to check in int
-        return (pBit_flags->data[i] & (1 << j)) != 0; 
+        return (pBit_flags->data[i] & (1 << j)) != 0; //checks if the right integer index and its bit is set, returns 1 if set, 0 if not set
 
     }
 }

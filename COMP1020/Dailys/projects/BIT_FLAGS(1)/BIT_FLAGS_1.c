@@ -39,6 +39,7 @@ BIT_FLAGS bit_flags_init_number_of_bits(int number_of_bits) //initialize bit fla
                     pBit_flags->capacity = index*size_of_int; //set capacity to number of ints needed
                     pBit_flags->size = number_of_bits; //set size to number of bits
                     pBit_flags->data = (int*)malloc(index * sizeof(int));
+                    
                     if (pBit_flags->data == NULL)
                     {
                         printf("Failed to allocate memory\n");
@@ -73,7 +74,7 @@ Status bit_flags_set_flag(BIT_FLAGS hBit_flags, int flag_position) //set flag at
     {
         //60 
         //pTemp = (int*)malloc(sizeof(int) * (pBit_flags->capacity + size_of_int)); //allocates more memory than needed
-        pTemp = (int*)malloc((index * sizeof(int)) + (flag_position - pBit_flags->capacity));
+        pTemp = (int*)malloc((index * sizeof(int)) + (flag_position - pBit_flags->capacity)); //allocates the original 32 bits plus the exceeding bits from the new flag position
         if (pTemp == NULL)
         {
             printf("Failed to allocate more memory\n");

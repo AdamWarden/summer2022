@@ -177,15 +177,15 @@ void fix_down(Queue *hQueue, int index) //all children are smaller than parent k
             largest_child = right_child;
         }
     }
-    else if(left_child < pQueue->size && right_child >= pQueue->size)
+    else if(left_child < pQueue->size && right_child >= pQueue->size) //if only left child is in bounds
     {
         largest_child = left_child;
     }
-    else if(left_child >= pQueue->size && right_child < pQueue->size)
+    else if(left_child >= pQueue->size && right_child < pQueue->size) //if only right child is in bounds
     {
         largest_child = right_child;
     }
-    else
+    else //if neither child is in bounds/exist
     {
         return;
     }

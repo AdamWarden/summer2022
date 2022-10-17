@@ -1,3 +1,11 @@
+/*
+Program: Daily 6b
+Author: Adam Warden
+Date: 17 Oct 2022
+Time Spent: 3 days
+Purpose: This program takes two seperate linked lists and adds their values together in a new list
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "program6b.h"
@@ -68,7 +76,7 @@ void head_insert(Node** head_ref, int data)
     *head_ref = new_node;
 }
 
-Node* list_sum(Node* head_ref, Node* head_ref2) //without changing the head1 and head 2 lists
+Node* list_sum(Node* head_ref, Node* head_ref2) 
 {
     Node* head_sum = NULL; //head of the sum list
     Node* curr = head_ref; //current node in the first list
